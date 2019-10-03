@@ -1,26 +1,40 @@
 package com.codegym.controller;
 
+import com.codegym.model.Classes;
 import com.codegym.model.Student;
+import com.codegym.service.ClassService;
 import com.codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 public class StudentController {
     @Autowired
     private StudentService studentService;
-    @RequestMapping("/")
-    public String home(){
-        return "/index";
+
+    @Autowired
+    private ClassService classService;
+
+    @ModelAttribute("class")
+    public Iterable<Classes> classes(){
+        return classService.findAll();
     }
 
     @RequestMapping("/list")
-    public ModelAndView getAllStudent(Pageable pageable){
-        Page<Student> students = studentService.findAll(pageable);
+    public ModelAndView getAllStudent(@RequestParam("s") Optional<String> s, @PageableDefault(value = 10, sort = "name") Pageable pageable){
+        Page<Student> students ;
+        if (s.isPresent()){
+            students = studentService.findAllByClasses_Name(s.get(), pageable);
+        }else {
+            students = studentService.findAll(pageable);
+        }
 
         ModelAndView modelAndView = new ModelAndView("/student/list");
         modelAndView.addObject("students",students);

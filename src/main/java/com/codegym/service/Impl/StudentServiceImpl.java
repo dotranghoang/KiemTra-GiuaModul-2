@@ -1,5 +1,6 @@
 package com.codegym.service.Impl;
 
+import com.codegym.model.Classes;
 import com.codegym.model.Student;
 import com.codegym.repository.StudentRepository;
 import com.codegym.service.StudentService;
@@ -29,6 +30,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student findById(Long id) {
         return studentRepository.findOne(id);
+    }
+
+    @Override
+    public Iterable<Student> findAllByClasses(Classes classes) {
+        return studentRepository.findAllByClasses(classes);
+    }
+
+    @Override
+    public Page<Student> findAllByClasses_Name(String className, Pageable pageable) {
+        return studentRepository.findAllByClasses_Name(className,pageable);
     }
 
 

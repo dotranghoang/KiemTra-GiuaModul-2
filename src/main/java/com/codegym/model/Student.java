@@ -11,6 +11,18 @@ public class Student {
 
     private String name,birthday,img;
 
+    @ManyToOne
+    @JoinColumn(name = "class_id")
+    private Classes classes;
+
+    public Classes getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Classes classes) {
+        this.classes = classes;
+    }
+
     public Student() {
     }
 

@@ -1,19 +1,39 @@
 package com.codegym.controller;
 
 import com.codegym.model.Classes;
+import com.codegym.model.Student;
 import com.codegym.service.ClassService;
+import com.codegym.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ClassController {
     @Autowired
     private ClassService  classService;
+
+    @Autowired
+    private StudentService studentService;
+
+    @RequestMapping("/")
+    public ModelAndView home(){
+        return getAllClass();
+    }
+
+    @GetMapping("/view-class/{id}")
+    public ModelAndView viewClass(@PathVariable Long id){
+        Classes classes = classService.findById(id);
+
+        Iterable<Student> students = studentService.findAllByClasses(classes);
+
+        ModelAndView modelAndView = new ModelAndView("/class/view");
+        modelAndView.addObject("classes",classes);
+        modelAndView.addObject("students",students);
+
+        return modelAndView;
+    }
 
     @GetMapping("/list-class")
     public ModelAndView getAllClass(){

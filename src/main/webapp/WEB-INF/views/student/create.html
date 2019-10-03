@@ -24,7 +24,15 @@
         </tr>
         <tr>
             <td>Image:</td>
-            <td><input type="text" th:field="*{img}"></td>
+            <td><input type="file" th:field="*{img}"></td>
+        </tr>
+        <tr>
+        <td>Class:</td>
+        <td>
+            <select th:field="*{classes}">
+                <option th:each="p : ${class}" th:value="${p.id}" th:text="${p.name}"></option>
+            </select>
+        </td>
         </tr>
         <tr>
             <td></td>

@@ -1,5 +1,6 @@
 package com.codegym;
 
+import com.codegym.formatter.ClassFormatter;
 import com.codegym.service.ClassService;
 import com.codegym.service.Impl.ClassServiceImpl;
 import com.codegym.service.Impl.StudentServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -125,5 +127,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     @Bean
     public ClassService classService() {
         return new ClassServiceImpl();
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new ClassFormatter(applicationContext.getBean(ClassService.class)));
     }
 }
