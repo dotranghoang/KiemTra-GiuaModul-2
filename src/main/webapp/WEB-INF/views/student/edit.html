@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student</title>
+</head>
+<body>
+<h1>Edit Student</h1>
+<p>
+    <a href="/list">Back to list student</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}">
+</th:block>
+<form th:action="@{/update-student}" th:object="${student}" method="post">
+    <table border="1">
+        <td><input type="hidden" th:field="*{id}"></td>
+        <tr>
+            <td>Full Name: </td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Birthday: </td>
+            <td><input type="text" th:field="*{birthday}"></td>
+        </tr>
+        <tr>
+            <td>Image: </td>
+            <td><input type="text" th:field="*{img}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

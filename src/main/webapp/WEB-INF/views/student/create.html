@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD New Student</title>
+</head>
+<body>
+<h1 class="title">Create New Student</h1>
+<p>
+    <a href="/list">Back to list student</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}">
+</th:block></body>
+<form th:action="@{/save-student}" th:object="${student}" method="post">
+    <table border="1">
+        <tr>
+            <td>Full Name:</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Birthday:</td>
+            <td><input type="text" th:field="*{birthday}"></td>
+        </tr>
+        <tr>
+            <td>Image:</td>
+            <td><input type="text" th:field="*{img}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create"></td>
+        </tr>
+    </table>
+</form>
+
+</html>
